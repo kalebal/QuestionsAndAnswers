@@ -6,6 +6,7 @@ const photoSchema = new mongoose.Schema({
 })
 
 const answerSchema = new mongoose.Schema({
+  id: Number,
   quesion_id: Number,
   body: String,
   date: { type: Date, default: Date.now },
