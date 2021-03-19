@@ -2,3 +2,5 @@
 .DS_Store
 csvs/
 .eslintrc.json
+config.js
+node_modules
