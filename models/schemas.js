@@ -2,12 +2,13 @@ const mongoose = require('mongoose');
 
 const photoSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
-  url: Number,
-})
+  answer_id: Number,
+  url: String
+});
 
 const answerSchema = new mongoose.Schema({
   id: Number,
-  quesion_id: Number,
+  question_id: Number,
   body: String,
   date: { type: Date, default: Date.now },
   answerer_name: String,
