@@ -1,6 +1,6 @@
 
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/";
+var url = "mongodb://localhost:27017/qa";
 
 
 /*
@@ -8,72 +8,63 @@ This sets up the mongodb client so aggregates can run using node
 */
 MongoClient.connect(url, function (err, db) {
   if (err) throw err;
-
-  db.photos.aggregate({
-        $group:
+  //this adds each photo's url to its respective answer as an array
+  db.collection('photos', function(err, collection)) {
+    collection.aggregate(
+      { $group:
         {
-          _id: "$answer_id", photos: { $push: '$url'} //ex: { _id: ~answer#123~ photos: [~url1~, ~url2~]}
-        }
-      },
-      {
-        $addFields:
+          _id: "$answer_id", photos: { $push: '$url'}
+          //ex: { _id: ~answer#123~ photos: [~url1~, ~url2~]}
+        }},
+      { $addFields:
         {
           id: "$_id" //duplicate id field to match answer index
-        }
+        } },
+      { $unset: '_id'
+      //_id matches the photo _id, which
+      //will prevent merging with answers
       },
-      {
-        $unset: '_id' //_id matches the photo _id, will prevent merging with answers (which has a different _id)
-      },
-      {
-        $merge:
+      { $merge:
         {
           into: 'answers',
-          on: 'id', //find where the photo group's answer_id matches an answer's indexed id
-          //this adds the photos property to the answer document without changing anything else
+          on: 'id',
+          //find where the photo group's answer_id matches an answer's indexed id
+          //this adds the photos property to the answer document
         }
-      })
+      });
+  }
 });
 
-//same as above minus the comments
-db.photos.aggregate({
-  $group:
-  {
-    _id: "$answer_id", photos: { $push: '$url' }
-  }
-},
-  {
-    $addFields:
-    {
-      id: "$_id"
-    }
-  },
-  {
-    $unset: '_id'
-  },
-  {
-    $merge:
-    {
-      into: 'answers',
-      on: 'id',
-    }
-  })
+//same step as above minus the comments
+//all the commands below are for use in mongo CLI
+db.photos.aggregate(
+    { $group:
+      {
+        _id: "$answer_id", photos: { $push: '$url'}
+        //ex: { _id: ~answer#123~ photos: [~url1~, ~url2~]}
+      }},
+    { $addFields:
+      {
+        id: "$_id" //duplicate id field to match answer index
+      } },
+    { $unset: '_id'
+    //_id matches the photo _id, which
+    //will prevent merging with answers
+    },
+    { $merge:
+      {
+        into: 'answers',
+        on: 'id',
+        //find where the photo group's answer_id matches an answer's indexed id
+        //this adds the photos property to the answer document
+      }
+    })
 
-
+//this embeds all answers as an array of subdocuments into their respective questions
 db.answers.aggregate([
   {
-    $merge:
-    {
-      into: 'newCollection',
-      whenNotMatched: 'insert'
-    }
-  }
-])
-
-
-db.newCollection.aggregate(
-  {
     $group:
-    {_id: "$question_id", answers: { $push: '$$ROOT' }} //root adds the whole document rather than one field
+    {_id: "$question_id", answers: { $push: '$$ROOT' }}
   },
   {
     $addFields:
@@ -86,18 +77,4 @@ db.newCollection.aggregate(
       into: 'questions',
       on: 'id',
     }
-  })
-
-//for renaming a property
-db.questions.aggregate([
-  { $unset: ['answers'] },
-  {
-    $merge:
-    {
-      into: 'questions',
-      on: '_id',
-      whenMatched: 'replace'
-    }
-  }
-])
-
+  }], { "allowDiskUse": true })
