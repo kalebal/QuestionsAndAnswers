@@ -1,6 +1,6 @@
 module.exports.csvPath = '/Users/kaleblyda/HackReactor/sdc/QuestionsAndAnswers/';
-const dbPath = 'mongodb://localhost/qatest';
-const currentDb = 'qatest'
+const dbPath = 'mongodb://localhost/qa';
+const currentDb = 'qatesta'
 
 
 const mongoose = require('mongoose');
@@ -13,20 +13,5 @@ db.once('open', () => {
 });
 
 
-const { MongoClient } = require('mongodb');
-var uri = "mongodb://localhost:27017/";
-const client = new MongoClient(uri);
-async function run() {
-  try {
-    // Connect the client to the server
-    await client.connect();
-    // Establish and verify connection
-    await client.db("qatest").command({ ping: 1 });
-    console.log("Connected successfully to server");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
-module.exports.client = client;
+
+
