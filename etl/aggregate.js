@@ -1,6 +1,6 @@
 
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/qa";
+var url = "mongodb://localhost:27017/";
 
 
 /*
@@ -8,9 +8,10 @@ This sets up the mongodb client so aggregates can run using node
 */
 MongoClient.connect(url, function (err, db) {
   if (err) throw err;
+  var dbo = db.db("qanda");
   //this adds each photo's url to its respective answer as an array
-  db.collection('photos', function(err, collection)) {
-    collection.aggregate(
+
+  dbo.collection('photos').aggregate(
       { $group:
         {
           _id: "$answer_id", photos: { $push: '$url'}
@@ -32,8 +33,7 @@ MongoClient.connect(url, function (err, db) {
           //this adds the photos property to the answer document
         }
       });
-  }
-});
+};
 
 //same step as above minus the comments
 //all the commands below are for use in mongo CLI
