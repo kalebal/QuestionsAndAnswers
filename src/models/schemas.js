@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 
 const photoSchema = new mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
+  _id: Number,
   answer_id: Number,
   url: String
 });
 
 const answerSchema = new mongoose.Schema({
-  id: Number,
+  _id: Number,
   question_id: Number,
   body: String,
   date: { type: Date, default: Date.now },
@@ -18,8 +18,8 @@ const answerSchema = new mongoose.Schema({
 });
 
 const questionSchema = new mongoose.Schema({
+  _id: Number,
   product_id: Number,
-  id: Number,
   body: String,
   date: { type: Date, default: Date.now },
   asker_name: String,
