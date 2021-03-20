@@ -1,9 +1,11 @@
 const dbConnection = require('./dbUtil.js');
 
-module.exports.getList = (collection, query, page, count) => {
+module.exports.getList = (collection, query, fields, page, count) => {
   db = dbConnection.getDatabase();
+  console.log('fields', fields)
   return db.collection(collection).find(query)
-  .skip( page > 1 ? ((pageNumber - 1) * count) : 0)
+  .project(fields)
+  .skip((page - 1) * count)
   .limit(count).toArray();
 };
 
