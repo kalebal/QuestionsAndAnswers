@@ -1,7 +1,8 @@
 var db = require('../dataServices/answers');
 
 module.exports.answer_get = function (req, res) {
-  db.getAnswers(req.params.question_id).then((result) => {
+  var { question_id, page, count } = req.params;
+  db.getAnswers(question_id, page, count).then((result) => {
     console.log('result found', result);
     res.status(200).send(result);
   }).catch((err) => {
