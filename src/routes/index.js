@@ -10,9 +10,9 @@ router.get('/', (req, res) => {
 });
 
 //Question Routes
-router.get('/questions', questionController.question_list);
+router.get('/questions', questionController.question_get);
 
-router.get('/questions/:product_id', questionController.question_get);
+router.post('/questions', questionController.add_question);
 
 router.put('/questions/:question_id/report', questionController.question_update_report);
 
@@ -21,12 +21,12 @@ router.put('/questions/:question_id/helpful', questionController.question_update
 
 
 //Answer Routes
-router.get('/answers', answerController.answer_list);
+router.get('/questions/:question_id/answers', answerController.answer_get);
 
-router.get('/answers/:question_id', answerController.answer_get);
+router.post('/questions/:question_id/answers', answerController.add_answer);
 
-router.put('/answers/:answer_id/report', answerController.answer_update_report);
+router.put('/questions/:question_id/answers/report', answerController.answer_update_report);
 
-router.put('/answers/:answer_id/helpful', answerController.answer_update_helpful);
+router.put('/questions/:question_id/answers/helpful', answerController.answer_update_helpful);
 
 module.exports = router;
