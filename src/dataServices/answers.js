@@ -22,7 +22,7 @@ module.exports.getAnswers = (id, page = 1, count = 5) => {
   });
 };
 
-module.exports.add_answer = (question_id, newAnswer) => {
+module.exports.addAnswer = (question_id, newAnswer) => {
   let newDoc = {
     question_id: question_id,
     body: newAnswer.body,
@@ -41,7 +41,6 @@ module.exports.add_answer = (question_id, newAnswer) => {
       'answers': newDoc
     }
   }
-  console.log(newDoc);
   return writeDb.updateDoc('questions', filter, update);
 };
 
