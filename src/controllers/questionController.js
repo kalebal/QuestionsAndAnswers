@@ -15,16 +15,28 @@ module.exports.question_get = function (req, res) {
 }
 
 module.exports.question_update_helpful = function (req, res) {
-  res.send('NOT IMPLEMENTED: question MARK HELPFUL');
+  var { question_id } = req.params;
+  db.markHelpful(question_id).then((result) => {
+    res.status(204).send();
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
 }
 
 module.exports.question_update_report = function (req, res) {
-  res.send('NOT IMPLEMENTED: question REPORT');
+  var { question_id } = req.params;
+  db.report(question_id).then((result) => {
+    res.status(204).send();
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
 }
 
 module.exports.add_question = function (req, res) {
   db.addQuestion(req.body).then(() => {
     res.status(201).send();
+  }).catch((err) => {
+    res.status(400).send(err);
   });
 }
 
