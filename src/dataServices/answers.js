@@ -22,6 +22,29 @@ module.exports.getAnswers = (id, page = 1, count = 5) => {
   });
 };
 
+module.exports.add_answer = (question_id, newAnswer) => {
+  let newDoc = {
+    question_id: question_id,
+    body: newAnswer.body,
+    answerer_name: newAnswer.name,
+    answerer_email: newAnswer.email,
+    date_written: new Date(),
+    helpful: 0,
+    reported: 0,
+    photos: newAnswer.photos
+  };
+  let filter = {
+    _id: parseInt(question_id)
+  }
+  let update = {
+    $push: {
+      'answers': newDoc
+    }
+  }
+  console.log(newDoc);
+  return writeDb.updateDoc('questions', filter, update);
+};
+
 module.exports.markHelpful = (answer_id) => {
   let filter = {
     'answers._id': parseInt(answer_id)
