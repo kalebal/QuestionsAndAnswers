@@ -3,12 +3,23 @@ const writeDb = require('./writeOps.js');
 
 module.exports.getAnswers = (id, page = 1, count = 5) => {
   let query = {
-    _id: parseInt(id),
+    _id: parseInt(id)
   };
   let returnFields = {
-    'answers': 1
+    'answers._id': 1,
+    'answers.body': 1,
+    'answers.date_written': 1,
+    'answers.answerer_name': 1,
+    'answers.helpful': 1,
+    'answers.photos': 1,
+    'answers.reported': 1
   };
-  return readDb.getList('questions', query, returnFields, page, count);
+  return readDb.getList('questions', query, returnFields, page, count).then((results) => {
+    results[0]['answers'] = results[0]['answers'].filter((answer) => {
+      return answer.reported === 0;
+    });
+    return results;
+  });
 };
 
 module.exports.markHelpful = (answer_id) => {
