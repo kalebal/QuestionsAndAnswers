@@ -25,8 +25,8 @@ router.get('/questions/:question_id/answers', answerController.answer_get);
 
 router.post('/questions/:question_id/answers', answerController.add_answer);
 
-router.put('/questions/:question_id/answers/report', answerController.answer_update_report);
+router.put('/answers/:answer_id/report', answerController.answer_update_report);
 
-router.put('/questions/:question_id/answers/helpful', answerController.answer_update_helpful);
+router.put('/answers/:answer_id/helpful', answerController.answer_update_helpful);
 
 module.exports = router;
