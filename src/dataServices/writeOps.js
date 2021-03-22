@@ -9,12 +9,12 @@ module.exports.addDoc = (collection, doc) => {
 
 //------- update document
 
-module.exports.updateDoc = (collection, filter, updateDoc) => {
+module.exports.updateDoc = (collection, filter, updateDoc, arrayFilters) => {
   db = dbConnection.getDatabase();
-  return db.collection(collection).updateOne(filter, updateDoc);
+  return db.collection(collection).updateOne(filter, updateDoc, arrayFilters);
 };
 
 module.exports.findAndUpdateDoc = (collection, filter, updateDoc) => {
   db = dbConnection.getDatabase();
-  return db.collection(collection).updateOne(filter, updateDoc);
+  return db.collection(collection).findOneAndUpdate(filter, updateDoc, { returnOriginal: false });
 };
