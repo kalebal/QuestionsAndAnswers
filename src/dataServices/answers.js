@@ -32,7 +32,7 @@ module.exports.report = (answer_id) => {
   };
   let updateDoc = {
     $inc: {
-      'answers.$[elem].helpful': 1
+      'answers.$[elem].report': 1
     }
   }
   let arrayFilters = {
