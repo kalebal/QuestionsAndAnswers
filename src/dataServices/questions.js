@@ -10,7 +10,12 @@ module.exports.getQuestions = (id, page = 1, count = 5) => {
     'product_id': 0,
     'asker_email': 0
   };
-  return readDb.getList('questions', query, omitFields, page, count);
+  return readDb.getList('questions', query, omitFields, page, count).then((results) => {
+    results = results.filter((q) => {
+      return q.reported === 0;
+    });
+    return results;
+  });;
 };
 
 module.exports.addQuestion = (newQ) => {
