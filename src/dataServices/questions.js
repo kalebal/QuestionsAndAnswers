@@ -13,8 +13,19 @@ module.exports.getQuestions = (id, page = 1, count = 5) => {
   return readDb.getList('questions', query, omitFields, page, count);
 };
 
-module.exports.addQuestion = () => {
-
+module.exports.addQuestion = (newQ) => {
+  let doc = {
+    product_id: parseInt(newQ.product_id),
+    body: newQ.body,
+    asker_name: newQ.name,
+    asker_email: newQ.email,
+    date_written: new Date(),
+    reported: 0,
+    helpful: 0,
+    answers: []
+  }
+  console.log(doc);
+  return writeDb.addDoc('questions', doc);
 };
 
 module.exports.markHelpful = (question_id) => {
