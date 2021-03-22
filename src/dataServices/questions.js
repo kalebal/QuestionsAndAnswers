@@ -35,7 +35,7 @@ module.exports.markHelpful = (question_id) => {
       helpful: 1
     }
   }
-  return writeDb.updateDoc('questions', filter, updateDoc)
+  return writeDb.updateDoc('questions', filter, updateDoc);
 };
 
 module.exports.report = (question_id) => {
