@@ -4,3 +4,4 @@ csvs/
 .eslintrc.json
 config.js
 node_modules
+.env
