@@ -1,12 +1,15 @@
 const MongoClient = require("mongodb").MongoClient;
-var { DATABASE_NAME, CONNECTION_URL } = require('../../config.js');
-
 
 let _database;
 module.exports = {
   connect(callback) {
-    MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (err, client) => {
-      _database = client.db(DATABASE_NAME);
+    MongoClient.connect('mongodb://db:27017', { useNewUrlParser: true }, (err, client) => {
+      if (err) {
+        console.log('IN DBUTIL ERROR CONNECTING TO DB');
+        console.log(err);
+        return callback(err);
+      }
+      _database = client.db(process.env.DATABASE_NAME);
       return callback(err, client);
     });
   },
