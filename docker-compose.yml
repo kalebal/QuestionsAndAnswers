@@ -1,0 +1,25 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - 3000:3000
+    networks:
+      - sdc-app
+    links:
+      - db
+  db:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - sdc-app
+    restart: always
+networks:
+  sdc-app:
+    driver: bridge
+volumes:
+  mongodb-data:
+    driver: local
