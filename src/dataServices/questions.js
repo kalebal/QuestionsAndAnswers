@@ -10,7 +10,7 @@ module.exports.getQuestions = (id, page = 1, count = 5) => {
     'product_id': 0,
     'asker_email': 0
   };
-  return readDb.getList('questions', query, omitFields, page, count).then((results) => {
+  return readDb.getList('Questions', query, omitFields, page, count).then((results) => {
     results = results.filter((q) => {
       return q.reported === 0;
     });
@@ -30,7 +30,7 @@ module.exports.addQuestion = (newQ) => {
     answers: []
   }
   console.log(doc);
-  return writeDb.addDoc('questions', doc);
+  return writeDb.addDoc('Questions', doc);
 };
 
 module.exports.markHelpful = (question_id) => {
@@ -40,7 +40,7 @@ module.exports.markHelpful = (question_id) => {
       helpful: 1
     }
   }
-  return writeDb.updateDoc('questions', filter, updateDoc);
+  return writeDb.updateDoc('Questions', filter, updateDoc);
 };
 
 module.exports.report = (question_id) => {
@@ -50,5 +50,5 @@ module.exports.report = (question_id) => {
       report: 1
     }
   }
-  return writeDb.updateDoc('questions', filter,)
+  return writeDb.updateDoc('Questions', filter,)
 };

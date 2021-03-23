@@ -14,8 +14,8 @@ module.exports.getAnswers = (id, page = 1, count = 5) => {
     'answers.photos': 1,
     'answers.reported': 1
   };
-  return readDb.getList('questions', query, returnFields, page, count).then((results) => {
-    results[0]['answers'] = results[0]['answers'].filter((answer) => {
+  return readDb.getList('Questions', query, returnFields, page, count).then((results) => {
+    results[0]['answers'] = results[0]['Answers'].filter((answer) => {
       return answer.reported === 0;
     });
     return results;
@@ -41,7 +41,7 @@ module.exports.addAnswer = (question_id, newAnswer) => {
       'answers': newDoc
     }
   }
-  return writeDb.updateDoc('questions', filter, update);
+  return writeDb.updateDoc('Questions', filter, update);
 };
 
 module.exports.markHelpful = (answer_id) => {
@@ -56,7 +56,7 @@ module.exports.markHelpful = (answer_id) => {
   let arrayFilters = {
     arrayFilters: [{ 'elem._id': parseInt(answer_id)}]
   }
-  return writeDb.updateDoc('questions', filter, updateDoc, arrayFilters);
+  return writeDb.updateDoc('Questions', filter, updateDoc, arrayFilters);
 };
 
 module.exports.report = (answer_id) => {
@@ -71,5 +71,5 @@ module.exports.report = (answer_id) => {
   let arrayFilters = {
     arrayFilters: [{ 'elem._id': parseInt(answer_id) }]
   }
-  return writeDb.updateDoc('questions', filter, updateDoc, arrayFilters);
+  return writeDb.updateDoc('Questions', filter, updateDoc, arrayFilters);
 };
