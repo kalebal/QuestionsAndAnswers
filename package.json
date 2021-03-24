@@ -13,6 +13,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "csv-parser": "^3.0.0",
+    "docker-machine": "^3.0.1",
     "dotenv": "^8.2.0",
     "eslint": "^7.22.0",
     "express": "^4.17.1",
@@ -22,6 +23,7 @@
     "nodemon": "^2.0.7"
   },
   "devDependencies": {
+    "artillery": "^1.6.2",
     "eslint-config-airbnb": "^18.2.1"
   }
 }

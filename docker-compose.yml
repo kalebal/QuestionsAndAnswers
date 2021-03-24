@@ -8,6 +8,8 @@ services:
       - sdc-app
     links:
       - db
+    volumes:
+      - .:/code
   db:
     image: mongo:latest
     ports:
@@ -22,4 +24,3 @@ networks:
     driver: bridge
 volumes:
   mongodb-data:
-    driver: local

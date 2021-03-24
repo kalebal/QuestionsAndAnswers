@@ -13,7 +13,8 @@ app.use('/qa/', router);
 
 
 app.get('/', (req, res) => {
-  res.send(`Hello World! -- you're not looking for questions, are you?`);
+  let url = process.env.CONNECTION_URL;
+  res.send(`Hello World! -- you're changing things in docker now, huh??? url=${url}`);
 });
 
 dbConnection.connect((err, client) => {

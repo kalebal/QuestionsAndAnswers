@@ -10,6 +10,9 @@ COPY . .
 
 ENV PORT=3000
 
+ENV DATABASE_NAME='qa'
+ENV CONNECTION_URL=mongodb://db:27017
+
 EXPOSE 3000
 
 CMD [ "node", "src/app.js"]
