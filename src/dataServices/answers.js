@@ -14,7 +14,7 @@ module.exports.getAnswers = (id, page = 1, count = 5) => {
     'answers.photos': 1,
     'answers.reported': 1
   };
-  return readDb.getList('Questions', query, returnFields, page, count).then((results) => {
+  return readDb.getList('Questions', query, returnFields, parseInt(page), parseInt(count)).then((results) => {
     results[0]['answers'] = results[0]['Answers'].filter((answer) => {
       return answer.reported === 0;
     });
