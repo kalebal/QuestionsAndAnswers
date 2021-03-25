@@ -1,0 +1,41 @@
+config:
+  target: "http://localhost:3000/qa/"
+  phases:
+    - duration: 30
+      arrivalRate: 10
+      rampTo: 50
+      name: "warm up"
+    - duration: 60
+      arrivalRate: 30
+      name: 'sustained max load'
+  variables:
+    question:
+      - "4"
+      - "6745"
+      - "475"
+      - "278485"
+      - "1267830"
+      - "4"
+    answer:
+      - "25"
+      - "30"
+      - "9786"
+      - "9767"
+      - "9544"
+      - "9545"
+      - "9546"
+      - "668"
+      - "259"
+      - "269"
+      - "270"
+  ensure:
+    maxErrorRate: 1
+scenarios:
+  - flow:
+      - get:
+          url: "/questions/{{ question }}/answers"
+  - flow:
+      - get:
+          url: "/question/{{ question }}/answers"
+      - put:
+          url: "/answers/{{ answer }}/helpful"
