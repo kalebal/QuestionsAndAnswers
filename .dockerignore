@@ -1,11 +1,13 @@
 node_modules
 *.csv
 */csvs
-*.csv
 .DS_Store
 .eslintrc.json
 config.js
 Dockerfile
-.dockerignore
 *.git
 .gitignore
+/etl
+/spec
+/models
+schemas.js
