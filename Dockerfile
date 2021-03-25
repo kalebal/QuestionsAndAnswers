@@ -1,12 +1,20 @@
-FROM node:12.18.1
+FROM node:12-alpine AS BUILD_IMAGE
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY . ./
+
+EXPOSE 3000
 
 RUN npm install
 
-COPY . .
+RUN npm prune --production
+
+FROM node:12-alpine
+
+WORKDIR /app
+
+COPY --from=BUILD_IMAGE /app ./
 
 ENV PORT=3000
 
