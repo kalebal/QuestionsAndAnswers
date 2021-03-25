@@ -1,4 +1,3 @@
-var { Question } = require('../models/schemas');
 var db = require('../dataServices/questions');
 
 module.exports.question_get = function (req, res) {
